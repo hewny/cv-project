@@ -1,24 +1,53 @@
 import { Component } from "react";
 
 export default class EducationInput extends Component {
+  constructor() {
+    super();
+    this.state = {
+      from: { type: "text" },
+      to: { type: "text" },
+    };
+  }
+
+  onFocus = (e) => {
+    if (e.target.name === "from") {
+      this.setState({ from: { type: "date" } });
+    } else {
+      this.setState({ to: { type: "date" } });
+    }
+  };
+
+  onBlur = (e) => {
+    if (e.target.name === "from") {
+      this.setState({ from: { type: "text" } });
+    } else {
+      this.setState({ to: { type: "text" } });
+    }
+  };
+
   render() {
     const { education, handleEducationChange } = this.props;
+
     return (
       <form>
         <label>Education: </label>
         <input
-          type="text"
+          type={this.state.from.type}
           value={education.from}
           name="from"
           onChange={handleEducationChange}
           placeholder="Start date"
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
         />
         <input
-          type="text"
+          type={this.state.to.type}
           value={education.to}
           name="to"
           onChange={handleEducationChange}
           placeholder="End date"
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
         />
         <input
           type="text"

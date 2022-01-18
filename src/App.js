@@ -15,23 +15,27 @@ class App extends Component {
 
     this.state = {
       profile: {
-        name: "John Doe",
-        title: "Web Developer",
-        email: "john@web.com",
-        phone: "123-456-7890",
+        name: "",
+        title: "",
+        email: "",
+        phone: "",
       },
       education: {
-        from: "2020",
-        to: "2021",
-        school: "Odin Project",
-        degree: "Javascript",
+        from: "",
+        to: "",
+        school: "",
+        degree: "",
       },
-      experience: {
-        from: "2021",
-        to: "2022",
-        company: "The Odin Company",
-        position: "Web Developer",
-      },
+      experience: [
+        {
+          from: "",
+          to: "",
+          company: "",
+          position: "",
+          key: 1,
+        },
+      ],
+      exampleFlag: false,
     };
     this.handleProfileChange = this.handleProfileChange.bind(this);
     this.handleEducationChange = this.handleEducationChange.bind(this);
@@ -68,8 +72,76 @@ class App extends Component {
     });
   };
 
+  exampleToggle = () => {
+    if (this.state.exampleFlag === false) {
+      this.setState({
+        profile: {
+          name: "John Doe",
+          title: "Web Developer",
+          email: "john@web.com",
+          phone: "123-456-7890",
+        },
+        education: {
+          from: "2020-01-01",
+          to: "2021-01-01",
+          school: "Odin Project",
+          degree: "Javascript",
+        },
+        experience: [
+          {
+            from: "2021",
+            to: "2022",
+            company: "The Odin Company",
+            position: "Web Developer",
+            key: 1,
+          },
+          {
+            from: "1999",
+            to: "2000",
+            company: "The Odin Bakery",
+            position: "Baker",
+            key: 2,
+          },
+        ],
+        exampleFlag: true,
+      });
+    } else {
+      this.setState({
+        profile: {
+          name: "",
+          title: "",
+          email: "",
+          phone: "",
+        },
+        education: {
+          from: "",
+          to: "",
+          school: "",
+          degree: "",
+        },
+        experience: [
+          {
+            from: "",
+            to: "",
+            company: "",
+            position: "",
+            key: 1,
+          },
+        ],
+        exampleFlag: false,
+      });
+    }
+  };
+
   render() {
     // console.log(this.state);
+    const exampleFlag = this.state.exampleFlag;
+    let button;
+    if (exampleFlag) {
+      button = <button onClick={this.exampleToggle}>Remove Example</button>;
+    } else {
+      button = <button onClick={this.exampleToggle}>Load Example</button>;
+    }
 
     return (
       <div>
@@ -93,6 +165,9 @@ class App extends Component {
           <Education education={this.state.education} />
           <Experience experience={this.state.experience} />
         </div>
+        <button onClick={this.exampleToggle}>
+          {this.state.exampleFlag ? "Remove Example" : "Load Example"}
+        </button>
       </div>
     );
   }
