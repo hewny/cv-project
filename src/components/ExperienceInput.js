@@ -1,51 +1,56 @@
-import { Component } from "react";
+import React from "react";
 
-export default class ExperienceInput extends Component {
-  render() {
-    const { experience, handleExperienceChange } = this.props;
-    // console.log(experience);
-    // console.log(experience.length);
+const ExperienceInput = (props) => {
+  const handleExperienceChange = props.handleExperienceChange
+  const addExperienceForm = props.addExperienceForm
+  const removeExperienceForm = props.removeExperienceForm
 
-    // const experienceItems = experience.map((exp) => (
-    //     <li key={exp.key.toString()}>test</li>
-    // ));
+  // let handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   alert(JSON.stringify(formValues))
+  // }
 
-    // // console.log(experienceItems);
+  return (
+    <div>
+      <form>
+        <label>Experience:</label>
+        {props.experience.map((element, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              name="from"
+              value={element.from || ""}
+              onChange={(e) => handleExperienceChange(index, e)}
+              placeholder="Start date"
+            />
+            <input
+              type="text"
+              name="to"
+              value={element.to || ""}
+              onChange={(e) => handleExperienceChange(index, e)}
+              placeholder="End date"
+            />
+            <input
+              type="text"
+              name="company"
+              value={element.company || ""}
+              onChange={(e) => handleExperienceChange(index, e)}
+              placeholder="Company"
+            />
+            <input
+              type="text"
+              name="position"
+              value={element.position || ""}
+              onChange={(e) => handleExperienceChange(index, e)}
+              placeholder="Position"
+            />
+          </div>
+        ))}
+      </form>
+      <button onClick={addExperienceForm}>Add</button>
+      <button onClick={removeExperienceForm}>Remove</button>
+    </div>
+  );
+};
 
-    return (
-      <div>
-        <form>
-          <label>Experience: </label>
-          <input
-            type="text"
-            value={experience.from}
-            name="from"
-            onChange={handleExperienceChange}
-            placeholder="Start date"
-          />
-          <input
-            type="text"
-            value={experience.to}
-            name="to"
-            onChange={handleExperienceChange}
-            placeholder="End date"
-          />
-          <input
-            type="text"
-            value={experience.company}
-            name="company"
-            onChange={handleExperienceChange}
-            placeholder="Company name"
-          />
-          <input
-            type="text"
-            value={experience.position}
-            name="position"
-            onChange={handleExperienceChange}
-            placeholder="Position"
-          />
-        </form>
-      </div>
-    );
-  }
-}
+export default ExperienceInput;

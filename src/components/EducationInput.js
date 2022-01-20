@@ -63,6 +63,10 @@ export default class EducationInput extends Component {
           onChange={handleEducationChange}
           placeholder="Degree"
         />
+        <div>
+          <button>Add</button>
+          <button>Remove</button>
+        </div>
       </form>
     );
   }

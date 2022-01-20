@@ -32,14 +32,16 @@ class App extends Component {
           to: "",
           company: "",
           position: "",
-          key: 1,
         },
       ],
       exampleFlag: false,
     };
     this.handleProfileChange = this.handleProfileChange.bind(this);
     this.handleEducationChange = this.handleEducationChange.bind(this);
+
     this.handleExperienceChange = this.handleExperienceChange.bind(this);
+    this.addExperienceForm = this.addExperienceForm.bind(this);
+    this.removeExperienceForm = this.removeExperienceForm.bind(this);
   }
 
   handleProfileChange = (e) => {
@@ -62,15 +64,26 @@ class App extends Component {
     });
   };
 
-  handleExperienceChange = (e) => {
+  handleExperienceChange = (i, e) => {
     const { name, value } = e.target;
-
     this.setState((prevState) => {
       const p = prevState.experience;
-      p[name] = value;
+      p[i][name] = value;
       return p;
     });
   };
+
+  addExperienceForm = () => {
+    this.setState((prevState) => ({
+      experience: [...prevState.experience, { from: "", to: "", company: "", position: "" }]
+    }))
+  }
+
+  removeExperienceForm = () => {
+    let exp = this.state.experience; 
+    exp.pop()
+    this.setState({experience: exp})
+  }
 
   exampleToggle = () => {
     if (this.state.exampleFlag === false) {
@@ -93,14 +106,12 @@ class App extends Component {
             to: "2022",
             company: "The Odin Company",
             position: "Web Developer",
-            key: 1,
           },
           {
             from: "1999",
             to: "2000",
             company: "The Odin Bakery",
             position: "Baker",
-            key: 2,
           },
         ],
         exampleFlag: true,
@@ -125,7 +136,6 @@ class App extends Component {
             to: "",
             company: "",
             position: "",
-            key: 1,
           },
         ],
         exampleFlag: false,
@@ -135,13 +145,6 @@ class App extends Component {
 
   render() {
     // console.log(this.state);
-    const exampleFlag = this.state.exampleFlag;
-    let button;
-    if (exampleFlag) {
-      button = <button onClick={this.exampleToggle}>Remove Example</button>;
-    } else {
-      button = <button onClick={this.exampleToggle}>Load Example</button>;
-    }
 
     return (
       <div>
@@ -157,6 +160,8 @@ class App extends Component {
           <ExperienceInput
             experience={this.state.experience}
             handleExperienceChange={this.handleExperienceChange}
+            addExperienceForm={this.addExperienceForm}
+            removeExperienceForm={this.removeExperienceForm}
           />
         </div>
         <div>
