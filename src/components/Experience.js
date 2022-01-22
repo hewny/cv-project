@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, useState } from "react";
 
 class Experience extends Component {
   render() {
@@ -18,6 +18,9 @@ const ExperienceInput = (props) => {
   const addExperienceForm = props.addExperienceForm;
   const removeExperienceForm = props.removeExperienceForm;
 
+  const [startDate, setStartDate] = useState("text");
+  const [endDate, setEndDate] = useState("text");
+
   // let handleSubmit = (event) => {
   //   event.preventDefault();
   //   alert(JSON.stringify(formValues))
@@ -30,18 +33,22 @@ const ExperienceInput = (props) => {
         {props.experience.map((element, index) => (
           <div key={index}>
             <input
-              type="text"
+              type={startDate}
               name="from"
               value={element.from || ""}
               onChange={(e) => handleExperienceChange(index, e)}
               placeholder="Start date"
+              onFocus={() => setStartDate("date")}
+              onBlur={() => setStartDate("text")}
             />
             <input
-              type="text"
+              type={endDate}
               name="to"
               value={element.to || ""}
               onChange={(e) => handleExperienceChange(index, e)}
               placeholder="End date"
+              onFocus={() => setEndDate("date")}
+              onBlur={() => setEndDate("text")}
             />
             <input
               type="text"

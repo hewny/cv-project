@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component, useState } from "react";
 
 class Education extends Component {
   render() {
@@ -17,6 +17,9 @@ const EducationInput = (props) => {
   const addEducationForm = props.addEducationForm;
   const removeEducationForm = props.removeEducationForm;
 
+  const [startDate, setStartDate] = useState("text");
+  const [endDate, setEndDate] = useState("text");
+
   // let handleSubmit = (event) => {
   //   event.preventDefault();
   //   alert(JSON.stringify(formValues))
@@ -29,18 +32,22 @@ const EducationInput = (props) => {
         {props.education.map((element, index) => (
           <div key={index}>
             <input
-              type="text"
+              type={startDate}
               name="from"
               value={element.from || ""}
               onChange={(e) => handleEducationChange(index, e)}
               placeholder="Start date"
+              onFocus={() => setStartDate("date")}
+              onBlur={() => setStartDate("text")}
             />
             <input
-              type="text"
+              type={endDate}
               name="to"
               value={element.to || ""}
               onChange={(e) => handleEducationChange(index, e)}
               placeholder="End date"
+              onFocus={() => setEndDate("date")}
+              onBlur={() => setEndDate("text")}
             />
             <input
               type="text"
@@ -64,77 +71,5 @@ const EducationInput = (props) => {
     </div>
   );
 };
-
-// class EducationInput extends Component {
-//   constructor() {
-//     super();
-//     this.state = {
-//       from: { type: "text" },
-//       to: { type: "text" },
-//     };
-//   }
-
-//   onFocus = (e) => {
-//     if (e.target.name === "from") {
-//       this.setState({ from: { type: "date" } });
-//     } else {
-//       this.setState({ to: { type: "date" } });
-//     }
-//   };
-
-//   onBlur = (e) => {
-//     if (e.target.name === "from") {
-//       this.setState({ from: { type: "text" } });
-//     } else {
-//       this.setState({ to: { type: "text" } });
-//     }
-//   };
-
-//   render() {
-//     const { education, handleEducationChange } = this.props;
-
-//     return (
-//       <form>
-//         <label>Education: </label>
-//         <input
-//           type={this.state.from.type}
-//           value={education.from}
-//           name="from"
-//           onChange={handleEducationChange}
-//           placeholder="Start date"
-//           onFocus={this.onFocus}
-//           onBlur={this.onBlur}
-//         />
-//         <input
-//           type={this.state.to.type}
-//           value={education.to}
-//           name="to"
-//           onChange={handleEducationChange}
-//           placeholder="End date"
-//           onFocus={this.onFocus}
-//           onBlur={this.onBlur}
-//         />
-//         <input
-//           type="text"
-//           value={education.school}
-//           name="school"
-//           onChange={handleEducationChange}
-//           placeholder="University name"
-//         />
-//         <input
-//           type="text"
-//           value={education.degree}
-//           name="degree"
-//           onChange={handleEducationChange}
-//           placeholder="Degree"
-//         />
-//         <div>
-//           <button>Add</button>
-//           <button>Remove</button>
-//         </div>
-//       </form>
-//     );
-//   }
-// }
 
 export { Education, EducationInput };
