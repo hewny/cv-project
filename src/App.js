@@ -2,12 +2,9 @@
 import "./App.css";
 import { Component } from "react";
 import Header from "./components/Header";
-import Profile from "./components/Profile";
-import Education from "./components/Education";
-import Experience from "./components/Experience";
-import ProfileInput from "./components/ProfileInput";
-import EducationInput from "./components/EducationInput";
-import ExperienceInput from "./components/ExperienceInput";
+import { Profile, ProfileInput } from "./components/Profile";
+import { Education, EducationInput } from "./components/Education";
+import { Experience, ExperienceInput } from "./components/Experience";
 
 class App extends Component {
   constructor() {
@@ -75,15 +72,18 @@ class App extends Component {
 
   addExperienceForm = () => {
     this.setState((prevState) => ({
-      experience: [...prevState.experience, { from: "", to: "", company: "", position: "" }]
-    }))
-  }
+      experience: [
+        ...prevState.experience,
+        { from: "", to: "", company: "", position: "" },
+      ],
+    }));
+  };
 
   removeExperienceForm = () => {
-    let exp = this.state.experience; 
-    exp.pop()
-    this.setState({experience: exp})
-  }
+    let exp = this.state.experience;
+    exp.pop();
+    this.setState({ experience: exp });
+  };
 
   exampleToggle = () => {
     if (this.state.exampleFlag === false) {
