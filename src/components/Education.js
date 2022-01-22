@@ -12,76 +12,129 @@ class Education extends Component {
   }
 }
 
-class EducationInput extends Component {
-  constructor() {
-    super();
-    this.state = {
-      from: { type: "text" },
-      to: { type: "text" },
-    };
-  }
+const EducationInput = (props) => {
+  const handleEducationChange = props.handleEducationChange;
+  const addEducationForm = props.addEducationForm;
+  const removeEducationForm = props.removeEducationForm;
 
-  onFocus = (e) => {
-    if (e.target.name === "from") {
-      this.setState({ from: { type: "date" } });
-    } else {
-      this.setState({ to: { type: "date" } });
-    }
-  };
+  // let handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   alert(JSON.stringify(formValues))
+  // }
 
-  onBlur = (e) => {
-    if (e.target.name === "from") {
-      this.setState({ from: { type: "text" } });
-    } else {
-      this.setState({ to: { type: "text" } });
-    }
-  };
-
-  render() {
-    const { education, handleEducationChange } = this.props;
-
-    return (
+  return (
+    <div>
       <form>
-        <label>Education: </label>
-        <input
-          type={this.state.from.type}
-          value={education.from}
-          name="from"
-          onChange={handleEducationChange}
-          placeholder="Start date"
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-        />
-        <input
-          type={this.state.to.type}
-          value={education.to}
-          name="to"
-          onChange={handleEducationChange}
-          placeholder="End date"
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-        />
-        <input
-          type="text"
-          value={education.school}
-          name="school"
-          onChange={handleEducationChange}
-          placeholder="University name"
-        />
-        <input
-          type="text"
-          value={education.degree}
-          name="degree"
-          onChange={handleEducationChange}
-          placeholder="Degree"
-        />
-        <div>
-          <button>Add</button>
-          <button>Remove</button>
-        </div>
+        <label>Education:</label>
+        {props.education.map((element, index) => (
+          <div key={index}>
+            <input
+              type="text"
+              name="from"
+              value={element.from || ""}
+              onChange={(e) => handleEducationChange(index, e)}
+              placeholder="Start date"
+            />
+            <input
+              type="text"
+              name="to"
+              value={element.to || ""}
+              onChange={(e) => handleEducationChange(index, e)}
+              placeholder="End date"
+            />
+            <input
+              type="text"
+              name="school"
+              value={element.school || ""}
+              onChange={(e) => handleEducationChange(index, e)}
+              placeholder="School"
+            />
+            <input
+              type="text"
+              name="degree"
+              value={element.degree || ""}
+              onChange={(e) => handleEducationChange(index, e)}
+              placeholder="Degree"
+            />
+          </div>
+        ))}
       </form>
-    );
-  }
-}
+      <button onClick={addEducationForm}>Add</button>
+      <button onClick={removeEducationForm}>Remove</button>
+    </div>
+  );
+};
+
+// class EducationInput extends Component {
+//   constructor() {
+//     super();
+//     this.state = {
+//       from: { type: "text" },
+//       to: { type: "text" },
+//     };
+//   }
+
+//   onFocus = (e) => {
+//     if (e.target.name === "from") {
+//       this.setState({ from: { type: "date" } });
+//     } else {
+//       this.setState({ to: { type: "date" } });
+//     }
+//   };
+
+//   onBlur = (e) => {
+//     if (e.target.name === "from") {
+//       this.setState({ from: { type: "text" } });
+//     } else {
+//       this.setState({ to: { type: "text" } });
+//     }
+//   };
+
+//   render() {
+//     const { education, handleEducationChange } = this.props;
+
+//     return (
+//       <form>
+//         <label>Education: </label>
+//         <input
+//           type={this.state.from.type}
+//           value={education.from}
+//           name="from"
+//           onChange={handleEducationChange}
+//           placeholder="Start date"
+//           onFocus={this.onFocus}
+//           onBlur={this.onBlur}
+//         />
+//         <input
+//           type={this.state.to.type}
+//           value={education.to}
+//           name="to"
+//           onChange={handleEducationChange}
+//           placeholder="End date"
+//           onFocus={this.onFocus}
+//           onBlur={this.onBlur}
+//         />
+//         <input
+//           type="text"
+//           value={education.school}
+//           name="school"
+//           onChange={handleEducationChange}
+//           placeholder="University name"
+//         />
+//         <input
+//           type="text"
+//           value={education.degree}
+//           name="degree"
+//           onChange={handleEducationChange}
+//           placeholder="Degree"
+//         />
+//         <div>
+//           <button>Add</button>
+//           <button>Remove</button>
+//         </div>
+//       </form>
+//     );
+//   }
+// }
 
 export { Education, EducationInput };

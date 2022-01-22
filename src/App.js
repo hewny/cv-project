@@ -17,12 +17,14 @@ class App extends Component {
         email: "",
         phone: "",
       },
-      education: {
-        from: "",
-        to: "",
-        school: "",
-        degree: "",
-      },
+      education: [
+        {
+          from: "",
+          to: "",
+          school: "",
+          degree: "",
+        },
+      ],
       experience: [
         {
           from: "",
@@ -35,6 +37,8 @@ class App extends Component {
     };
     this.handleProfileChange = this.handleProfileChange.bind(this);
     this.handleEducationChange = this.handleEducationChange.bind(this);
+    this.addEducationForm = this.addEducationForm.bind(this);
+    this.removeEducationForm = this.removeEducationForm.bind(this);
 
     this.handleExperienceChange = this.handleExperienceChange.bind(this);
     this.addExperienceForm = this.addExperienceForm.bind(this);
@@ -51,21 +55,35 @@ class App extends Component {
     });
   };
 
-  handleEducationChange = (e) => {
+  handleEducationChange = (index, e) => {
     const { name, value } = e.target;
-
     this.setState((prevState) => {
       const p = prevState.education;
-      p[name] = value;
+      p[index][name] = value;
       return p;
     });
   };
 
-  handleExperienceChange = (i, e) => {
+  addEducationForm = (e) => {
+    this.setState((prevState) => ({
+      education: [
+        ...prevState.education,
+        { from: "", to: "", school: "", degree: "" },
+      ],
+    }));
+  };
+
+  removeEducationForm = (e) => {
+    let edu = this.state.education;
+    edu.pop();
+    this.setState({ education: edu });
+  };
+
+  handleExperienceChange = (index, e) => {
     const { name, value } = e.target;
     this.setState((prevState) => {
       const p = prevState.experience;
-      p[i][name] = value;
+      p[index][name] = value;
       return p;
     });
   };
@@ -94,12 +112,14 @@ class App extends Component {
           email: "john@web.com",
           phone: "123-456-7890",
         },
-        education: {
-          from: "2020-01-01",
-          to: "2021-01-01",
-          school: "Odin Project",
-          degree: "Javascript",
-        },
+        education: [
+          {
+            from: "2020-01-01",
+            to: "2021-01-01",
+            school: "Odin Project",
+            degree: "Javascript",
+          },
+        ],
         experience: [
           {
             from: "2021",
@@ -124,12 +144,14 @@ class App extends Component {
           email: "",
           phone: "",
         },
-        education: {
-          from: "",
-          to: "",
-          school: "",
-          degree: "",
-        },
+        education: [
+          {
+            from: "",
+            to: "",
+            school: "",
+            degree: "",
+          },
+        ],
         experience: [
           {
             from: "",
@@ -156,6 +178,8 @@ class App extends Component {
           <EducationInput
             education={this.state.education}
             handleEducationChange={this.handleEducationChange}
+            addEducationForm={this.addEducationForm}
+            removeEducationForm={this.removeEducationForm}
           />
           <ExperienceInput
             experience={this.state.experience}
