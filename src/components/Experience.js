@@ -1,25 +1,43 @@
-import { Component, useState } from "react";
+import { useState } from "react";
 
-class Experience extends Component {
-  render() {
-    const { experience } = this.props;
+const Experience = (props) => {
+  const { experience } = props;
 
-    return (
-      <div>
-        {experience.from} {experience.to} {experience.company}{" "}
-        {experience.position}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {experience.map((element, index) => (
+        <div key={index}>
+          {element.from} {element.to} {element.company} {element.position}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const ExperienceInput = (props) => {
-  const handleExperienceChange = props.handleExperienceChange;
-  const addExperienceForm = props.addExperienceForm;
-  const removeExperienceForm = props.removeExperienceForm;
-
+  const { experience, setExperience } = props
   const [startDate, setStartDate] = useState("text");
   const [endDate, setEndDate] = useState("text");
+
+  const handleChange = (index, e) => {
+    let newExperience = [...experience];
+    newExperience[index][e.target.name] = e.target.value;
+    setExperience(newExperience);
+  };
+
+  const addExperienceForm = () => {
+    let newExperience = [
+      ...experience,
+      { from: "", to: "", company: "", position: "" },
+    ];
+    setExperience(newExperience);
+  };
+
+  const removeExperienceForm = () => {
+    let newExperience = [...experience];
+    newExperience.pop();
+    setExperience(newExperience);
+  };
 
   // let handleSubmit = (event) => {
   //   event.preventDefault();
@@ -30,13 +48,13 @@ const ExperienceInput = (props) => {
     <div>
       <form>
         <label>Experience:</label>
-        {props.experience.map((element, index) => (
+        {experience.map((element, index) => (
           <div key={index}>
             <input
               type={startDate}
               name="from"
               value={element.from || ""}
-              onChange={(e) => handleExperienceChange(index, e)}
+              onChange={(e) => handleChange(index, e)}
               placeholder="Start date"
               onFocus={() => setStartDate("date")}
               onBlur={() => setStartDate("text")}
@@ -45,7 +63,7 @@ const ExperienceInput = (props) => {
               type={endDate}
               name="to"
               value={element.to || ""}
-              onChange={(e) => handleExperienceChange(index, e)}
+              onChange={(e) => handleChange(index, e)}
               placeholder="End date"
               onFocus={() => setEndDate("date")}
               onBlur={() => setEndDate("text")}
@@ -54,14 +72,14 @@ const ExperienceInput = (props) => {
               type="text"
               name="company"
               value={element.company || ""}
-              onChange={(e) => handleExperienceChange(index, e)}
+              onChange={(e) => handleChange(index, e)}
               placeholder="Company"
             />
             <input
               type="text"
               name="position"
               value={element.position || ""}
-              onChange={(e) => handleExperienceChange(index, e)}
+              onChange={(e) => handleChange(index, e)}
               placeholder="Position"
             />
           </div>

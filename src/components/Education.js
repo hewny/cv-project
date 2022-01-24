@@ -1,24 +1,43 @@
-import { Component, useState } from "react";
+import { useState } from "react";
 
-class Education extends Component {
-  render() {
-    const { education } = this.props;
+const Education = (props) => {
+  const { education } = props;
 
-    return (
-      <div>
-        {education.from} {education.to} {education.school} {education.degree}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {education.map((element, index) => (
+        <div key={index}>
+          {element.from} {element.to} {element.school} {element.degree}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const EducationInput = (props) => {
-  const handleEducationChange = props.handleEducationChange;
-  const addEducationForm = props.addEducationForm;
-  const removeEducationForm = props.removeEducationForm;
-
+  const { education, setEducation } = props;
   const [startDate, setStartDate] = useState("text");
   const [endDate, setEndDate] = useState("text");
+
+  const handleChange = (index, e) => {
+    let newEducation = [...education];
+    newEducation[index][e.target.name] = e.target.value;
+    setEducation(newEducation);
+  };
+
+  const addEducationForm = () => {
+    let newEducation = [
+      ...education,
+      { from: "", to: "", school: "", degree: "" },
+    ];
+    setEducation(newEducation);
+  };
+
+  const removeEducationForm = () => {
+    let newEducation = [...education];
+    newEducation.pop();
+    setEducation(newEducation);
+  };
 
   // let handleSubmit = (event) => {
   //   event.preventDefault();
@@ -29,13 +48,13 @@ const EducationInput = (props) => {
     <div>
       <form>
         <label>Education:</label>
-        {props.education.map((element, index) => (
+        {education.map((element, index) => (
           <div key={index}>
             <input
               type={startDate}
               name="from"
               value={element.from || ""}
-              onChange={(e) => handleEducationChange(index, e)}
+              onChange={(e) => handleChange(index, e)}
               placeholder="Start date"
               onFocus={() => setStartDate("date")}
               onBlur={() => setStartDate("text")}
@@ -44,7 +63,7 @@ const EducationInput = (props) => {
               type={endDate}
               name="to"
               value={element.to || ""}
-              onChange={(e) => handleEducationChange(index, e)}
+              onChange={(e) => handleChange(index, e)}
               placeholder="End date"
               onFocus={() => setEndDate("date")}
               onBlur={() => setEndDate("text")}
@@ -53,14 +72,14 @@ const EducationInput = (props) => {
               type="text"
               name="school"
               value={element.school || ""}
-              onChange={(e) => handleEducationChange(index, e)}
+              onChange={(e) => handleChange(index, e)}
               placeholder="School"
             />
             <input
               type="text"
               name="degree"
               value={element.degree || ""}
-              onChange={(e) => handleEducationChange(index, e)}
+              onChange={(e) => handleChange(index, e)}
               placeholder="Degree"
             />
           </div>
